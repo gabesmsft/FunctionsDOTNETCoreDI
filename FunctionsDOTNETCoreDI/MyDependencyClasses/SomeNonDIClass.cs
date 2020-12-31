@@ -2,7 +2,7 @@
 
 namespace FunctionsDOTNETCoreDI
 {
-    public class SomeClass
+    public class SomeNonDIClass
     {
 
         public void DoSomeLogging(ILogger log)

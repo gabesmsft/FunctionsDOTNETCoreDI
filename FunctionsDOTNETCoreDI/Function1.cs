@@ -22,6 +22,7 @@ namespace FunctionsDOTNETCoreDI
 
         private readonly IMyDependency2 _myDependency2;
 
+        //This logging approach gives you more granular control over the logging level per Function / per class (via host.json)
         public Function1(ILogger<Function1> logger, IConfiguration configuration, IMyDependency1 myDependency1, IMyDependency2 myDependency2)
         {
             _logger = logger;
@@ -35,7 +36,7 @@ namespace FunctionsDOTNETCoreDI
 
         [FunctionName("Function1")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req /*, ILogger log*/)
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -47,12 +48,6 @@ namespace FunctionsDOTNETCoreDI
             _logger.LogInformation("MyDependency1.TestDependencyInjection() return value: " + _myDependency1.TestDependencyInjection());
 
             _myDependency2.DoSomeLogging();
-
-
-           SomeClass someClass3 = new SomeClass();
-            //the purpose of the following call is to demonstrate what is *not* a good practice for logging,
-            //and why the approach demonstrated for _myDependency2 is typically better.
-           // someClass3.DoSomeLogging(log);
 
             return new OkObjectResult("hello");
         }

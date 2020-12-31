@@ -8,7 +8,9 @@
       }
     },
     "logLevel": {
-      "FunctionsDOTNETCoreDI": "Information"
+      "FunctionsDOTNETCoreDI.Function1": "Information",
+      "FunctionsDOTNETCoreDI.MyDependency2": "Information",
+      "FunctionsDOTNETCoreDI.Function2": "Error"
     }
   }
 }
