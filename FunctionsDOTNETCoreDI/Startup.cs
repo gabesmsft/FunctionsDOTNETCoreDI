@@ -2,7 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions;
 using System.IO;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 [assembly: FunctionsStartup(typeof(FunctionsDOTNETCoreDI.Startup))]
@@ -13,18 +16,10 @@ namespace FunctionsDOTNETCoreDI
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            /*
-            //don't use the following, since we dont want to override the Functions-runtime-provided logging
-
-            builder.Services.AddLogging((loggingBuilder) =>
-            {
-                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-            });
-            */
-
-            //Registering MyDependency1 and MyDependency2 as services so that they can be dependency-injected into a client
-            builder.Services.AddTransient<IMyDependency1, MyDependency1>(s => new MyDependency1("MyDependency1 successfully injected"));
-            builder.Services.AddScoped<IMyDependency2, MyDependency2>();
+            builder.Services.AddTransient<IMyDependency1, MyDependency1>();
+            builder.Services.AddSingleton<IMyDependency2, MyDependency2>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
@@ -32,7 +27,7 @@ namespace FunctionsDOTNETCoreDI
             FunctionsHostBuilderContext context = builder.GetContext();
 
             builder.ConfigurationBuilder
-           .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings1.json"), optional: false, reloadOnChange: false)
+           .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings1.json"), optional: true, reloadOnChange: false)
            .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings1.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
            .AddEnvironmentVariables();
         }

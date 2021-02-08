@@ -1,20 +1,22 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FunctionsDOTNETCoreDI
 {
     public class MyDependency2 : IMyDependency2
     {
-        private readonly ILogger<MyDependency2> _logger;
+        private string TestString;
 
-        public MyDependency2(ILogger<MyDependency2> logger)
+        public MyDependency2(IMyDependency1 myDependency1)
         {
-            _logger = logger;
+            TestString = "MyDependency2";
         }
 
-        public void DoSomeLogging()
+        public String TestDependencyInjection2()
         {
-           _logger.LogInformation("ILogger in action in MyDependency2 class");
+            return TestString;
         }
-
     }
 }

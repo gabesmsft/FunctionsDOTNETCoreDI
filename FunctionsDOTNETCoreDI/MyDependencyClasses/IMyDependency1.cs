@@ -2,6 +2,7 @@
 {
     public interface IMyDependency1
     {
-        string TestDependencyInjection();
+        string TestDependencyInjection1();
+        string TestDependencyInjection2();
     }
 }
