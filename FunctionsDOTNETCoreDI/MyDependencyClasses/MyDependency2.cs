@@ -9,7 +9,7 @@ namespace FunctionsDOTNETCoreDI
     {
         private string TestString;
 
-        public MyDependency2(IMyDependency1 myDependency1)
+        public MyDependency2()
         {
             TestString = "MyDependency2";
         }
